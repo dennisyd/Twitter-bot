@@ -1,6 +1,8 @@
 import local_settings
 import tweepy
+import imdb
 import sys
+import random
 
 
 class TwitterAPI:
@@ -17,9 +19,20 @@ class TwitterAPI:
         self.api = tweepy.API(auth)
 
     def tweet(self, message):
-        self.api.update_status(message)
+        tweet = message
+        self.api.update_status(tweet)
+
+    def tweetMovie(self):
+        movies = imdb.IMDb()
+        movie_id = random.randint(0, 100000)
+        movie = movies.get_movie(movie_id)
+        print movie.keys()
+        tweet = '%s was produced in %s' % (movie['title'], movie['year'], )
+
+        self.api.update_status(tweet)
 
 
 if __name__ == '__main__':
     twitter = TwitterAPI()
-    twitter.tweet("Dom is cool")
+    #twitter.tweet("Dom is cool")
+    twitter.tweetMovie()
