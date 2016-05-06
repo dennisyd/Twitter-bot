@@ -1,11 +1,11 @@
 '''
-Local Settings for a heroku_ebooks account. #fill in the name of the account you're tweeting from here.
+Local Settings for Twitterless Dan Bot
 '''
 
 #configuration
-MY_CONSUMER_KEY = ' FUvt5oJ0nBLl7LsGo4Was8FAO'
+MY_CONSUMER_KEY = 'FUvt5oJ0nBLl7LsGo4Was8FAO'
 MY_CONSUMER_SECRET = 'p0BU30GwntFxw4IksnwYDm1iA98uwHGU5qLmawZ3QrzA9OesXD'
-MY_ACCESS_TOKEN_KEY = ' 319729108-IlmXRB6QVa7dvsn4DlXVpzbLKDZQc6TuK8XUuJdh'
+MY_ACCESS_TOKEN_KEY = '319729108-IlmXRB6QVa7dvsn4DlXVpzbLKDZQc6TuK8XUuJdh'
 MY_ACCESS_TOKEN_SECRET = 'WljgZmvQm5XuW8qSN6cldzU2BXGBQaa8Um0VLIXnfDof9'
 
 SOURCE_ACCOUNTS = [''] #A list of comma-separated, quote-enclosed Twitter handles of account that you'll generate tweets based on. It should look like ["account1", "account2"]. If you want just one account, no comma needed.
