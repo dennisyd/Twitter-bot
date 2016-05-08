@@ -63,17 +63,12 @@ class TwitterAPI:
         while flag == 1:
             flag = 0
 
-            movie_id = random.randint(0, 100000)
+            movie_id = random.randint(0, 1000000)
             movie = self.movies.get_movie(movie_id)
 
             review = str(self.rating_analysis(movie_id))
 
             tweet = '%s was produced in %s. %s' % (movie['title'], movie['year'], review)
-
-            try:
-                coverUrl = movie['cover url']
-            except:
-                picture_flag = 0
 
             if len(tweet) > 140:
                 tweet = '%s was produced in %s' % (movie['title'], movie['year'])
@@ -82,7 +77,13 @@ class TwitterAPI:
                 tweet = '%s has a long title' % (movie['title'])
 
             if len(tweet) > 140:
+                print 'move title too long'
                 flag = 1
+
+        try:
+            coverUrl = movie['cover url']
+        except:
+            picture_flag = 0
 
         if picture_flag == 1:
             self.tweet_with_media(coverUrl,tweet)
