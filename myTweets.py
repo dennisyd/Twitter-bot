@@ -24,22 +24,15 @@ class TwitterAPI:
     def rating_analysis(self, movie_id):
 
         try:
-            rating = self.movies.get_movie_critic_reviews(movie_id)
+            rating = self.movies.get_movie_critic_reviews(movie_id)['rating']
         except:
+            print 'no rating'
             rating = -1
 
         if rating == -1:
-            movie_review_analysis = 'nvr reviewed'
-        elif rating <= 1:
-            movie_review_analysis = 'BAD'
-        elif rating <= 2:
-            movie_review_analysis = 'Eh!'
-        elif rating <= 3:
-            movie_review_analysis = 'Okay'
-        elif rating <= 4:
-            movie_review_analysis = 'Good'
+            movie_review_analysis = ''
         else:
-            movie_review_analysis = 'Great!'
+            movie_review_analysis = 'It was rated ' + rating + '/10 stars.'
 
         return movie_review_analysis
 
@@ -73,9 +66,9 @@ class TwitterAPI:
             movie_id = random.randint(0, 100000)
             movie = self.movies.get_movie(movie_id)
 
-            review = self.rating_analysis(movie_id)
+            review = str(self.rating_analysis(movie_id))
 
-            tweet = '%s was produced in %s. It was %s' % (movie['title'], movie['year'], review)
+            tweet = '%s was produced in %s. %s' % (movie['title'], movie['year'], review)
 
             try:
                 coverUrl = movie['cover url']
@@ -96,6 +89,8 @@ class TwitterAPI:
         else:
             print 'tweeting without media'
             self.api.update_status(tweet)
+
+        print 'tweeted: ' + tweet
 
 if __name__ == '__main__':
     twitter = TwitterAPI()
