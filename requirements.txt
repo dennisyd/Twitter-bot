@@ -1,1 +1,3 @@
 python-twitter
+python-tweepy
+python-IMDbPY
