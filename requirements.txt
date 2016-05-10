@@ -1,3 +1,3 @@
 python-twitter
-python-tweepy==2.3.0
-python-IMDbPY
+tweepy==2.3.0
+IMDbPY
