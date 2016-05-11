@@ -24,6 +24,7 @@ class TwitterAPI:
 
         self.api = tweepy.API(auth)
         self.movies = imdb.IMDb()
+        #this could cause a timeout adds 13 seconds....
         self.criticReview = RndSentence()
 
         t1 = time()
@@ -89,6 +90,7 @@ class TwitterAPI:
             movie_info = "%s. %s" % (title, rating)
             print movie_info
 
+
             review = self.criticReview.rndCriticReview()
             tweet = str(movie_info) + str(review)
 
@@ -113,6 +115,9 @@ class TwitterAPI:
         print 'TWEETED: ' + tweet
 
 if __name__ == '__main__':
+    t0 = time()
     twitter = TwitterAPI()
     #twitter.tweet("Dom is cool")
     twitter.tweetMovie()
+    t1 = time()
+    print 'runtime: ' + str(t1-t0)
