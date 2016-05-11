@@ -30,18 +30,19 @@ class TwitterAPI:
         loadTime = str((t1-t0))
         print 'movie cat initalized: ' + loadTime
 
-    def rating_analysis(self, movie_id):
+    def rating_analysis(self, movie):
+        rating = movie.get('rating')
 
-        try:
-            rating = self.movies.get_movie_critic_reviews(movie_id)['rating']
-        except:
-            print 'no rating'
-            rating = -1
+        #print 'rating: ' + str(rating)
+        #print 'rating type: ' + str(type(rating))
 
-        if rating == -1:
-            movie_review_analysis = ''
+        if type(rating) is float:
+            #print 'has a rating'
+            movie_review_analysis = str(rating) + '/10 stars.'
         else:
-            movie_review_analysis = 'It was rated ' + rating + '/10 stars.'
+            #print 'no rating'
+            movie_review_analysis = ''
+
 
         return movie_review_analysis
 
@@ -69,20 +70,32 @@ class TwitterAPI:
         flag = 1
         picture_flag = 1
         coverUrl = ''
-        tweet = ''
+        tweet = 'debugging'
         while flag == 1:
             flag = 0
             movie_id = random.randint(0, 1000000)
 
             movie = self.movies.get_movie(movie_id)
-            stars = str(self.rating_analysis(movie_id))
+            kind = movie['kind']
+            rating = self.rating_analysis(movie)
+            title = movie.get('long imdb title')
 
-            movie_info = '%s was produced in %s. %s' % (movie['title'], movie['year'], stars)
+            title = title.encode('ascii', 'ignore').decode('ascii')
+
+            print 'full title: ' + str(title)
+            print 'kind: ' + str(movie['kind'])
+            print 'stars: ' + str(rating)
+
+            movie_info = "%s. %s" % (title, rating)
+            print movie_info
+
             review = self.criticReview.rndCriticReview()
-
             tweet = str(movie_info) + str(review)
 
             if(len(tweet) > 140):
+                flag = 1
+
+            if(kind != 'movie'):
                 flag = 1
 
         try:
@@ -91,12 +104,13 @@ class TwitterAPI:
             picture_flag = 0
 
         if picture_flag == 1:
+            print 'tweeting with media'
             self.tweet_with_media(coverUrl,tweet)
         else:
             print 'tweeting without media'
             self.api.update_status(tweet)
 
-        print 'tweeted: ' + tweet
+        print 'TWEETED: ' + tweet
 
 if __name__ == '__main__':
     twitter = TwitterAPI()
