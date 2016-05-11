@@ -1,3 +1,5 @@
+import nltk
+nltk.data.path.append('./nltk_data/')
 import local_settings
 import tweepy
 import imdb
