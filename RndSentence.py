@@ -88,7 +88,7 @@ class RndSentence:
 
     def rndCriticReview(self):
         Tweet = str(self.sentence_N_V_P_N())
-        Critic = 'One critic said \"' + Tweet +'\"'
+        Critic = 'Meow Review: \"' + Tweet +'\"'
         print Critic
         return str(Critic)
 
