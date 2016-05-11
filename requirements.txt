@@ -1,3 +1,4 @@
 python-twitter
 tweepy==2.3.0
 IMDbPY
+nltk
