@@ -5,11 +5,15 @@ import sys
 import random
 import requests
 import os
-
+from RndSentence import RndSentence
+from time import time as time
 
 class TwitterAPI:
 
     def __init__(self):
+        print 'initalizing movie cat, twitter bot'
+        t0 = time()
+
         consumer_key = local_settings.MY_CONSUMER_KEY
         consumer_secret = local_settings.MY_CONSUMER_SECRET
         access_key = local_settings.MY_ACCESS_TOKEN_KEY
@@ -20,6 +24,11 @@ class TwitterAPI:
 
         self.api = tweepy.API(auth)
         self.movies = imdb.IMDb()
+        self.criticReview = RndSentence()
+
+        t1 = time()
+        loadTime = str((t1-t0))
+        print 'movie cat initalized: ' + loadTime
 
     def rating_analysis(self, movie_id):
 
@@ -60,24 +69,20 @@ class TwitterAPI:
         flag = 1
         picture_flag = 1
         coverUrl = ''
+        tweet = ''
         while flag == 1:
             flag = 0
-
             movie_id = random.randint(0, 1000000)
+
             movie = self.movies.get_movie(movie_id)
+            stars = str(self.rating_analysis(movie_id))
 
-            review = str(self.rating_analysis(movie_id))
+            movie_info = '%s was produced in %s. %s' % (movie['title'], movie['year'], stars)
+            review = self.criticReview.rndCriticReview()
 
-            tweet = '%s was produced in %s. %s' % (movie['title'], movie['year'], review)
+            tweet = str(movie_info) + str(review)
 
-            if len(tweet) > 140:
-                tweet = '%s was produced in %s' % (movie['title'], movie['year'])
-
-            if len(tweet) > 140:
-                tweet = '%s has a long title' % (movie['title'])
-
-            if len(tweet) > 140:
-                print 'move title too long'
+            if(len(tweet) > 140):
                 flag = 1
 
         try:
