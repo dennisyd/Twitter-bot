@@ -96,8 +96,8 @@ class RndSentence:
         return str(Critic)
 
 
-"""if __name__ == '__main__':
+if __name__ == '__main__':
     sentence = RndSentence()
     i = 10
     for x in range(0,i):
-        sentence.rndCriticReview()"""
+        sentence.rndCriticReview()
